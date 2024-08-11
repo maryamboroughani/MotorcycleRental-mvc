@@ -9,7 +9,7 @@ Le système de location de motos est une application web permettant la gestion d
 
 ### Modèle de Relation d'Entité (ERD)
 
-![ERD](MotorcycleRental/public/img/ERD.png)
+![ERD](MotorcycleRental-mvc/public/img/ERD.png)
 
 ### Brève Description du Projet
 
@@ -28,12 +28,12 @@ Les fonctionnalités pour les administrateurs incluent :
 ### Liens Importants
 
 - **WebDev** : [Lien vers le site WebDev](http://)
-- **GitHub** : [Lien vers le dépôt GitHub](http://github.com/)
+- **GitHub** : [Lien vers le dépôt GitHub](https://github.com/maryamboroughani/MotorcycleRental-mvc.git)
 
 
 ## Instructions d'Utilisation
 
-1. Accédez à l'application via `http://localhost/MotorcycleRental`.
+1. Accédez à l'application via `http://localhost/MotorcycleRental-mvc`.
 2. Utilisez les fonctionnalités disponibles pour gérer les motos et les locations.
 
 
