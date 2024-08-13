@@ -41,3 +41,36 @@ Les fonctionnalités pour les administrateurs incluent :
 
 **Auteur**: Maryam Boroughani
 **Date**: 9/08/2024
+
+MotorcycleRental-mvc/
+├── public/
+│   └── css/
+│       └── style.css
+├── views/
+│   ├── layouts/
+│   │   ├── footer.php
+│   │   └── header.php
+│   ├── home/
+│   │   └── index.php
+│   └── rental/
+│       ├── create.php
+│       ├── edit.php
+│       ├── index.php
+│       └── show.php
+├── controllers/
+│   ├── HomeController.php
+│   └── RentalController.php
+├── models/
+│   ├── CRUD.php
+│   └── Rental.php
+├── providers/
+│   ├── View.php
+│   └── Validator.php
+├── routes/
+│   ├── Route.php
+│   └── Web.php
+├── config.php
+├── motorcycle_shop.sql
+├── .htaccess
+└── index.php
+
