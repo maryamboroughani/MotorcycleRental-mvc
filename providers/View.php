@@ -1,36 +1,25 @@
 <?php
 namespace App\Providers;
 
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
-
 class View {
-    private static $twig;
-
-    public static function init() {
-        if (self::$twig === null) {
-            $loader = new FilesystemLoader('views');
-            self::$twig = new Environment($loader);
-            self::$twig->addGlobal('asset', ASSET);
-            self::$twig->addGlobal('base', BASE);
+    static public function render($template, $data = []) {
+        // Ensure the views directory is correctly set
+        $filePath = 'views/' . $template . '.php';
+        
+        if (file_exists($filePath)) {
+            // Extract data to variables for use in the view
+            extract($data);
+            
+            include $filePath;
+        } else {
+            throw new \Exception("View file not found: $filePath");
         }
     }
 
-    public static function render($template, $data = []) {
-        self::init();
-        try {
-            echo self::$twig->render($template . ".twig", $data);
-        } catch (\Twig\Error\LoaderException $e) {
-            // Handle template loading error
-            echo "Template error: " . $e->getMessage();
-        } catch (\Twig\Error\RuntimeError $e) {
-            // Handle template rendering error
-            echo "Rendering error: " . $e->getMessage();
-        }
-    }
-
-    public static function redirect($url) {
+    static public function redirect($url) {
         header('Location: ' . BASE . '/' . $url);
-        exit();  // Ensure script execution stops after redirect
+        exit();
     }
 }
+
+?>

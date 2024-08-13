@@ -1,9 +1,10 @@
-{{ include('layouts/header.php', { title: 'New Rental' }) }}
+<?php
+// views/rental/create.php
+?>
+<?php include 'layouts/header.php'; ?>
 <div class="container">
-    <form method="post" action="{{ path('rental_store') }}">
+    <form method="post" action="<?php echo BASE; ?>/rental/store">
         <h2>New Rental</h2>
-        
-       
         
         <label>Motorcycle ID
             <input type="text" name="motorcycle_id" required>
@@ -21,4 +22,4 @@
         <input type="submit" class="btn" value="Save">
     </form>
 </div>
-{{ include('layouts/footer.php') }}
+<?php include 'layouts/footer.php'; ?>

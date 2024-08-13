@@ -1,8 +1,15 @@
-{{ include('layouts/header.php', { title: 'Rentals' }) }}
+<?php 
+include 'layouts/header.php'; 
+
+// Debugging: Output rental data
+echo '<pre>';
+print_r($rentals);
+echo '</pre>';
+?>
 
 <h1>Rentals</h1>
 
-{% if rentals is not empty %}
+<?php if (!empty($rentals)): ?>
 <table>
     <thead>
         <tr>
@@ -15,29 +22,29 @@
         </tr>
     </thead>
     <tbody>
-        {% for rental in rentals %}
+        <?php foreach ($rentals as $rental): ?>
         <tr>
-            <td>{{ rental.id }}</td>
-            <td>{{ rental.motorcycle_id }}</td>
-            <td>{{ rental.user_id }}</td>
-            <td>{{ rental.start_date|date('d M Y') }}</td>
-            <td>{{ rental.end_date|date('d M Y') }}</td>
+            <td><?= htmlspecialchars($rental['id']) ?></td>
+            <td><?= htmlspecialchars($rental['motorcycle_id']) ?></td>
+            <td><?= htmlspecialchars($rental['user_id']) ?></td>
+            <td><?= date('d M Y', strtotime($rental['start_date'])) ?></td>
+            <td><?= date('d M Y', strtotime($rental['end_date'])) ?></td>
             <td>
-                <a href="{{ base }}/rental/edit?id={{ rental.id }}">Edit</a>
-                <form action="{{ base }}/rental/delete" method="post" style="display:inline;">
-                    <input type="hidden" name="id" value="{{ rental.id }}">
+                <a href="<?= BASE ?>/rental/edit?id=<?= htmlspecialchars($rental['id']) ?>">Edit</a>
+                <form action="<?= BASE ?>/rental/delete" method="post" style="display:inline;">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($rental['id']) ?>">
                     <button type="submit">Delete</button>
                 </form>
             </td>
         </tr>
-        {% endfor %}
+        <?php endforeach; ?>
     </tbody>
 </table>
 
-{% else %}
+<?php else: ?>
 <p>No rentals found.</p>
-{% endif %}
+<?php endif; ?>
 
-<a href="{{ base }}/rental/create" class="btn">New Rental</a>
+<a href="<?= BASE ?>/rental/create" class="btn">New Rental</a>
 
-{{ include('layouts/footer.php') }}
+<?php include 'layouts/footer.php'; ?>

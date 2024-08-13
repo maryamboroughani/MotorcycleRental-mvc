@@ -1,17 +1,17 @@
-{{ include('layouts/header.php', { title: 'Show Rental' }) }}
+<?php include 'layouts/header.php'; ?>
 
 <div class="container">
     <h1>Rental</h1>
-    <p><strong>Rental ID:</strong> {{ rental.id }}</p>
-    <p><strong>Motorcycle ID:</strong> {{ rental.motorcycle_id }}</p>
-    <p><strong>User ID:</strong> {{ rental.user_id }}</p>
-    <p><strong>Start Date:</strong> {{ rental.start_date|date('d M Y') }}</p>
-    <p><strong>End Date:</strong> {{ rental.end_date|date('d M Y') }}</p>
-    <a class="btn" href="{{ base }}/rental/edit?id={{ rental.id }}">Edit</a>
-    <form action="{{ base }}/rental/delete" method="post" style="display:inline;">
-        <input type="hidden" name="id" value="{{ rental.id }}">
+    <p><strong>Rental ID:</strong> <?= htmlspecialchars($rental['id']) ?></p>
+    <p><strong>Motorcycle ID:</strong> <?= htmlspecialchars($rental['motorcycle_id']) ?></p>
+    <p><strong>User ID:</strong> <?= htmlspecialchars($rental['user_id']) ?></p>
+    <p><strong>Start Date:</strong> <?= date('d M Y', strtotime($rental['start_date'])) ?></p>
+    <p><strong>End Date:</strong> <?= date('d M Y', strtotime($rental['end_date'])) ?></p>
+    <a class="btn" href="<?= BASE ?>/rental/edit?id=<?= htmlspecialchars($rental['id']) ?>">Edit</a>
+    <form action="<?= BASE ?>/rental/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($rental['id']) ?>">
         <button class="btn red">Delete</button>
     </form>
 </div>
 
-{{ include('layouts/footer.php') }}
+<?php include 'layouts/footer.php'; ?>
