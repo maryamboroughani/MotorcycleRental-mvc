@@ -1,11 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require 'vendor/autoload.php';
-
-use App\Controllers\HomeController;
-
-$controller = new HomeController();
-$controller->index();  
+try {
+    $pdo = new \PDO('mysql:host=localhost;dbname=motorcycle_shop;port=8889;charset=utf8', 'root', 'root');
+    echo "Connection successful!";
+} catch (\PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?>

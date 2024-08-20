@@ -3,18 +3,18 @@ use App\Routes\Route;
 use App\Controllers\HomeController;
 use App\Controllers\RentalController;
 
+$router = new \App\Routes\Route();
+
 // Define routes
-Route::get('/', 'HomeController@index'); 
-Route::get('/home', 'HomeController@index');
+// In routes/web.php
+$router->get('/rental', 'RentalController@index');
+$router->get('/rental/create', 'RentalController@create');
+$router->post('/rental/store', 'RentalController@store');
+$router->get('/rental/show', 'RentalController@show');
+$router->get('/rental/edit', 'RentalController@edit');
+$router->post('/rental/update', 'RentalController@update');
+$router->post('/rental/delete', 'RentalController@delete');
 
-// Rental routes with parameters
-Route::get('/rental', 'RentalController@index'); // List all rentals
-Route::get('/rental/create', 'RentalController@create'); // Show form to create a rental
-Route::post('/rental/store', 'RentalController@store'); // Store a new rental
-Route::get('/rental/show/{id}', 'RentalController@show'); // Show a specific rental
-Route::get('/rental/edit/{id}', 'RentalController@edit'); // Show form to edit a specific rental
-Route::post('/rental/update/{id}', 'RentalController@update'); // Update a specific rental
-Route::post('/rental/delete/{id}', 'RentalController@delete'); // Delete a specific rental
+// Dispatch the request
+$router->dispatch();
 
-// Dispatch routes
-Route::dispatch();

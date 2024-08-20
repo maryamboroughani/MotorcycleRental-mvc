@@ -2,24 +2,23 @@
 namespace App\Providers;
 
 class View {
-    static public function render($template, $data = []) {
-        // Ensure the views directory is correctly set
-        $filePath = 'views/' . $template . '.php';
-        
-        if (file_exists($filePath)) {
-            // Extract data to variables for use in the view
-            extract($data);
-            
-            include $filePath;
+    public static function render($view, $data = []) {
+        // Ensure 'msg' is always present with a default value
+        $data = array_merge(['msg' => ''], $data);
+        extract($data);
+
+        // Debugging output to verify what data is being passed
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+
+        // Safeguard against including views multiple times
+        $viewPath = __DIR__ . '/../views/' . $view . '.php';
+        if (file_exists($viewPath)) {
+            include $viewPath;
         } else {
-            throw new \Exception("View file not found: $filePath");
+            // Handle the case where the view file does not exist
+            echo 'View file not found: ' . htmlspecialchars($viewPath);
         }
     }
-
-    static public function redirect($url) {
-        header('Location: ' . BASE . '/' . $url);
-        exit();
-    }
 }
-
-?>

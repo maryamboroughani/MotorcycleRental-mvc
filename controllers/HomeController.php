@@ -1,20 +1,9 @@
 <?php
-namespace App\Controllers;
 
-use App\Providers\View;
+namespace App\Controllers;
 
 class HomeController {
     public function index() {
-        $data = [
-            'title' => 'Welcome to Motorcycle Rental',
-            'description' => 'Find and rent the best motorcycles!'
-        ];
-        View::render('home/index', $data);  // Ensure this matches your PHP file location
-    }
-
-    public function test() {
-        echo "Routing works!";
+        \App\Providers\View::render('home/index');
     }
 }
-
-?>

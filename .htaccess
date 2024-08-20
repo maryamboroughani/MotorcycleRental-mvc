@@ -1,7 +1,10 @@
-
+# Enable the RewriteEngine
 RewriteEngine On
+
+# Set the base path for the rewrite rules
 RewriteBase /MotorcycleRental-mvc/
+
+# Redirect requests to index.php if the requested file or directory does not exist
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$ index.php/$1 [L]
-
+RewriteRule ^ index.php [L]

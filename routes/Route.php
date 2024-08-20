@@ -2,63 +2,44 @@
 namespace App\Routes;
 
 class Route {
-    private static $routes = [];
+    protected $routes = [];
 
-    // Register a GET route
-    public static function get($url, $controller) {
-        self::$routes[] = ['url' => $url, 'controller' => $controller, 'method' => 'GET'];
+    // Method to register GET routes
+    public function get($uri, $action) {
+        $this->routes['GET'][$uri] = $action;
     }
 
-    // Register a POST route
-    public static function post($url, $controller) {
-        self::$routes[] = ['url' => $url, 'controller' => $controller, 'method' => 'POST'];
+    // Method to register POST routes
+    public function post($uri, $action) {
+        $this->routes['POST'][$uri] = $action;
     }
 
-    // Dispatch the request to the appropriate controller and method
-    public static function dispatch() {
-        $url = $_SERVER['REQUEST_URI'];
-        $urlSegments = explode('?', $url);
-        $urlPath = rtrim($urlSegments[0], '/');
+    // Method to dispatch requests to the appropriate controller and method
+    public function dispatch() {
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // Strip query string
         $method = $_SERVER['REQUEST_METHOD'];
 
-        //echo 'Requested URL: ' . $urlPath . '<br>';
+        // Check if the route exists
+        if (isset($this->routes[$method][$uri])) {
+            $action = $this->routes[$method][$uri];
+            list($controller, $method) = explode('@', $action);
 
-        
-        foreach (self::$routes as $route) {
-            if ($route['method'] === $method && self::matchRoute($route['url'], $urlPath)) {
-                $controllerSegments = explode('@', $route['controller']);
-                $controllerName = "App\\Controllers\\" . $controllerSegments[0];
-                $methodName = $controllerSegments[1];
-
-                if (!class_exists($controllerName) || !method_exists($controllerName, $methodName)) {
-                    http_response_code(404);
-                    echo "404 - Controller or Method not found";
-                    return;
-                }
-
-                $controllerInstance = new $controllerName();
-
-                $queryParams = [];
-                if (isset($urlSegments[1])) {
-                    parse_str($urlSegments[1], $queryParams);
-                }
-
-                if ($method === "GET") {
-                    $controllerInstance->$methodName($queryParams);
-                } elseif ($method === "POST") {
-                    $controllerInstance->$methodName($_POST, $queryParams);
-                }
-                
-                return;
+            // Ensure the controller class exists and the method is callable
+            if (class_exists($controller) && method_exists($controller, $method)) {
+                (new $controller)->$method();
+            } else {
+                $this->handleError('Controller or method not found.');
             }
+        } else {
+            $this->handleError('Route not found.');
         }
-
-        http_response_code(404);
-        echo "404 - Page not found";
     }
 
-    // Match the route using simple patterns
-    private static function matchRoute($routeUrl, $requestUrl) {
-        return $routeUrl === $requestUrl;
+    // Method to handle errors and provide a user-friendly message
+    protected function handleError($message) {
+        http_response_code(404);
+        include __DIR__ . '/../views/error.php';
+        // Optionally, you can pass $message to the error view
+        // include __DIR__ . '/../views/error.php';
     }
 }
